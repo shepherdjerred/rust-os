@@ -4,10 +4,8 @@ version = "0.1.0"
 authors = ["jerred"]
 edition = "2018"
 
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
-
 [dependencies]
+bootloader = "0.8.0"
+
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner"
