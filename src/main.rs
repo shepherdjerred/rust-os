@@ -3,6 +3,8 @@
 
 use core::panic::PanicInfo;
 
+extern crate rlibc;
+
 static HELLO_WORLD: &[u8] = b"Hello World!";
 
 #[panic_handler]

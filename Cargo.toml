@@ -1,11 +1,9 @@
 [package]
 name = "rust-os"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["jerred"]
 edition = "2018"
 
 [dependencies]
-bootloader = "0.8.0"
-
-[target.'cfg(target_os = "none")']
-runner = "bootimage runner"
+bootloader = "0.9.8"
+rlibc = "1.0.0"
