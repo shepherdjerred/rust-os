@@ -8,7 +8,7 @@ jobs:
   - rust: stable
   - rust: beta
 before_script:
-- rustup component add rust-src
+- rustup component add rust-src --toolchain nightly
 - rustup component add llvm-tools-preview
 - cargo install bootloader
 script:
