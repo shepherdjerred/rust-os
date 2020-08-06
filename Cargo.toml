@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 bootloader = "0.8.0"
+rlibc = "1.0.0"
 
 [target.'cfg(target_os = "none")']
 runner = "bootimage runner"
