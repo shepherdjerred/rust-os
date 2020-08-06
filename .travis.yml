@@ -10,7 +10,6 @@ jobs:
 before_script:
 - rustup component add rust-src --toolchain nightly
 - rustup component add llvm-tools-preview
-- cargo install bootloader
 script:
 - cargo build --verbose --all
 - cargo bootimage
