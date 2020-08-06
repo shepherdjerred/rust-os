@@ -9,8 +9,10 @@ jobs:
   - rust: beta
 before_script:
 - rustup component add rust-src
+- rustup component add llvm-tools-preview
 script:
 - cargo build --verbose --all
+- cargo bootimage
 deploy:
   provider: releases
   api_key:
