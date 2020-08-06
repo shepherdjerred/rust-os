@@ -1,18 +1,22 @@
 language: rust
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
 jobs:
   allow_failures:
-    - rust: stable
-    - rust: beta
+  - rust: stable
+  - rust: beta
 before_script:
-  - rustup component add rust-src
+- rustup component add rust-src
 script:
-  - cargo build --verbose --all
+- cargo build --verbose --all
 deploy:
   provider: releases
-  file: "target/x86_64-bare-metal/debug/bootimage-rust-os.bin"
-  skip_cleanup: true
+  api_key:
+    secure: 2IHM90cFLjdti7M57Kjf5R5XUTcgAlCIYRP6qt07i3EYT1eKpB2i38unRRrQXmIDkPPfT8+3lGFXfgGi5Dr414zBay/nG/XOUkdDGe55kd4JfMNf2fYXvmkilBnNbDDIlkbFLM2nD5wSLmpStKLO7B8Kkn+GnclFrtssDyZIv1Zm4W/30D9SxR+ulCpMsVZt1kMg3M9i8mLMiCrHS77Y0FbPXCiAAQsfdBxvgaBv9+F6ME9OAkOM2Coum8hAr/gwhqslFaHFgcGBhdNcXuvnlRHTOVnjNPEYCfe7Za9GumCKgJLPvAfaBqniJJ5dGfBsyaBjWF3K9Tr9GuyS6X2toAenyq98MostFWXx81UwIzqTS1yChgoaapzDXECNM6Hh0KI5Q8Ko7P/flPky78sF4pc7s2YSYhsDb/7jaE0T6mIUWPrJNn/m2B7ZpxUsvcE/04z7eHXXy0xagnRrcxQ2PUcnYJHZww0PcY6WYmIgcjWvBqyIQBih8Z0moOMTqgwxWiLgnrrtG/iBs3A4/UULRR25UscbX2ArDDgu4O5c9WMZlbcHVYcfavbOMHxXzgde5aEwy47OVmaLeM9b/Or9VFle7rWERt13hWa5PSR9WAiOzHFgl9r4J9BkLjt6QB006pXlOMx4Vpajjq5ORavJDfonApnwNnY4xylhjWO83rs=
+  file: target/x86_64-bare-metal/debug/bootimage-rust-os.bin
+  on:
+    repo: shepherdjerred/rust-os
+  skip_cleanup: 'true'
   draft: true
