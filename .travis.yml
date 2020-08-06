@@ -10,7 +10,8 @@ jobs:
 before_script:
 - rustup component add rust-src --toolchain nightly
 - rustup component add llvm-tools-preview
-- cargo install bootimage
+# https://github.com/rust-osdev/bootimage/issues/64
+- (cd .. && cargo install bootimage)
 script:
 - cargo build --verbose --all
 - cargo bootimage
