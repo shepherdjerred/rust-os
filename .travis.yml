@@ -1,9 +1,5 @@
 language: rust
-env:
-  - TARGET=x86_64-bare-metal.json
 rust:
   - stable
   - beta
   - nightly
-script:
-  - "cargo build --target $TARGET"
