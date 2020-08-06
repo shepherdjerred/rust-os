@@ -11,3 +11,8 @@ before_script:
   - rustup component add rust-src
 script:
   - cargo build --verbose --all
+deploy:
+  provider: releases
+  file: "target/x86_64-bare-metal/debug/bootimage-rust-os.bin"
+  skip_cleanup: true
+  draft: true
