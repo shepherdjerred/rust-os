@@ -1,5 +1,11 @@
 language: rust
+env:
+  - TARGET=x86_64-bare-metal.json
 rust:
   - stable
   - beta
   - nightly
+before_script:
+  - "rustup target add $TARGET"
+script:
+  - "cargo build --target $TARGET"
