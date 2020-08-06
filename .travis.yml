@@ -3,5 +3,11 @@ rust:
   - stable
   - beta
   - nightly
+jobs:
+  allow_failures:
+    - rust: stable
+    - rust: beta
 before_script:
   - rustup component add rust-src
+script:
+  - cargo build --verbose --all
