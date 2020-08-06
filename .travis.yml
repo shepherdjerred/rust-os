@@ -25,4 +25,5 @@ deploy:
     branch: master
     rust: nightly
   skip_cleanup: 'true'
-  draft: true'
+  draft: true
+  overwrite: true
