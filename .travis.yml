@@ -18,5 +18,7 @@ deploy:
   file: target/x86_64-bare-metal/debug/bootimage-rust-os.bin
   on:
     repo: shepherdjerred/rust-os
+    branch: master
+    rust: nightly
   skip_cleanup: 'true'
   draft: true
