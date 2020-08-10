@@ -70,7 +70,7 @@ impl Writer {
         match byte {
             b'\n' => self.new_line(),
             byte => {
-                if self.current_column_position >= BUFFER_HEIGHT {
+                if self.current_column_position >= BUFFER_WIDTH {
                     self.new_line();
                 }
 
@@ -87,7 +87,26 @@ impl Writer {
         }
     }
 
-    fn new_line(&mut self) {}
+    fn new_line(&mut self) {
+        for row in 1..BUFFER_HEIGHT {
+            for col in 0..BUFFER_WIDTH {
+                let character = self.text_buffer.chars[row][col].read();
+                self.text_buffer.chars[row - 1][col].write(character);
+            }
+        }
+        self.clear_row(BUFFER_HEIGHT -1);
+        self.current_column_position = 0;
+    }
+
+    fn clear_row(&mut self, row: usize) {
+        let blankCharacter = Character {
+            ascii_character: b' ',
+            color_code: self.color_code
+        };
+        for col in 0..BUFFER_WIDTH {
+            self.text_buffer.chars[row][col].write(blankCharacter);
+        }
+    }
 }
 
 impl fmt::Write for Writer {
