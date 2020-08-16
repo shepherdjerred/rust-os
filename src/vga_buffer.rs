@@ -1,5 +1,8 @@
 use volatile::Volatile;
 use core::fmt;
+use lazy_static::lazy_static;
+use spin::Mutex;
+
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -20,7 +23,7 @@ pub enum Color {
     LightRed = 12,
     Pink = 13,
     Yellow = 14,
-    White = 15
+    White = 15,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -54,7 +57,6 @@ pub struct Writer {
     text_buffer: &'static mut Buffer,
 }
 
-
 impl Writer {
     pub fn write_string(&mut self, string: &str) {
         for byte in string.bytes() {
@@ -80,7 +82,7 @@ impl Writer {
                 let color_code = self.color_code;
                 self.text_buffer.chars[row][col].write(Character {
                     ascii_character: byte,
-                    color_code
+                    color_code,
                 });
                 self.current_column_position += 1;
             }
@@ -94,17 +96,17 @@ impl Writer {
                 self.text_buffer.chars[row - 1][col].write(character);
             }
         }
-        self.clear_row(BUFFER_HEIGHT -1);
+        self.clear_row(BUFFER_HEIGHT - 1);
         self.current_column_position = 0;
     }
 
     fn clear_row(&mut self, row: usize) {
-        let blankCharacter = Character {
+        let blank_character = Character {
             ascii_character: b' ',
-            color_code: self.color_code
+            color_code: self.color_code,
         };
         for col in 0..BUFFER_WIDTH {
-            self.text_buffer.chars[row][col].write(blankCharacter);
+            self.text_buffer.chars[row][col].write(blank_character);
         }
     }
 }
@@ -116,15 +118,27 @@ impl fmt::Write for Writer {
     }
 }
 
-pub fn print_something() {
-    use core::fmt::Write;
-    let mut writer = Writer {
+lazy_static! {
+    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         current_column_position: 0,
         color_code: ColorCode::new(Color::Yellow, Color::Black),
         text_buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
-    };
+    });
+}
 
-    writer.write_string("This is a VGA text buffer!!");
-    writer.new_line();
-    write!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+#[macro_export]
+macro_rules! print {
+    ($($arg:tt)*) => ($crate::vga_buffer::_print(format_args!($($arg)*)));
+}
+
+#[macro_export]
+macro_rules! println {
+    () => ($crate::print!("\n"));
+    ($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
+}
+
+#[doc(hidden)]
+pub fn _print(args: fmt::Arguments) {
+    use core::fmt::Write;
+    WRITER.lock().write_fmt(args).unwrap();
 }
