@@ -1,7 +1,7 @@
 # rust-os
 [![License](https://img.shields.io/github/license/shepherdjerred/rust-os)](LICENSE)
 [![Build Status](https://travis-ci.com/shepherdjerred/rust-os.svg?branch=master)](https://travis-ci.com/shepherdjerred/rust-os)
-[![Latest Release](https://img.shields.io/github/v/release/shepherdjerred/rust-os?include_prereleases)](releases)
+[![Latest Release](https://img.shields.io/github/v/release/shepherdjerred/rust-os?include_prereleases)](https://github.com/shepherdjerred/rust-os/releases)
 
 An operating system written in Rust
 
